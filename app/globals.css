@@ -4,3 +4,119 @@
   --font-karla: var(--font-geist-karla);
   --font-satoshi: var(--font-satoshi)
 }
+
+@theme {
+  --color-blue-100: #2c325d;
+  --color-light-100: #fff8fb;
+  --color-dark-100: #212121;
+  --color-gray-20: rgba(108, 102, 133, 0.2);
+  --color-gray-25: rgba(108, 102, 133, 0.25);
+  --color-gray-40: rgba(58, 56, 77, 0.04);
+  --color-gray-100: #6c6685;
+  --color-pink-10: #ffeef5;
+  --color-pink-100: #ff4393;
+  --color-orange-100: #fe6247;
+}
+
+@layer base {
+
+  *,
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .navbar {
+    @apply h-22.5 border-b border-gray-200 flex items-center;
+
+    nav {
+      @apply flex items-center justify-between max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 w-full;
+
+      a {
+        @apply flex items-center gap-2.5;
+
+        h1 {
+          @apply text-xl font-black font-satoshi -tracking-[0.1px];
+        }
+      }
+
+      figure {
+        @apply flex items-center gap-4;
+      }
+    }
+  }
+
+  .wrapper {
+    @apply max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .page {
+    @apply flex flex-col min-h-screen pt-12.5 pb-20 gap-9;
+  }
+
+  .header {
+    @apply flex flex-col gap-9;
+
+    .header-container {
+      @apply flex flex-col md:flex-row md:items-center justify-between gap-5;
+
+      .details {
+        @apply flex gap-2.5 items-center;
+
+        article {
+          @apply flex flex-col gap-1 -tracking-[0.8px];
+
+          p {
+            @apply text-sm text-gray-100 font-medium;
+          }
+
+          h1 {
+            @apply text-3xl font-bold text-dark-100 capitalize;
+          }
+        }
+      }
+
+      aside {
+        @apply flex items-center gap-2 md:gap-4;
+
+        a {
+          @apply py-2.5 px-5 flex items-center gap-2.5 text-sm font-semibold text-dark-100 border border-gray-25 rounded-4xl hover:bg-gray-20 transition-colors duration-150;
+
+          span {
+            @apply truncate;
+          }
+        }
+      }
+    }
+
+    .search-filter {
+      @apply flex flex-col md:flex-row md:items-center gap-5 justify-between;
+
+      .search {
+        @apply relative max-w-[500px] w-full;
+
+        input {
+          @apply border border-gray-20 py-2 pl-8 pr-5 text-dark-100 text-sm font-normal placeholder:text-gray-100 w-full rounded-[18px] focus:outline-pink-100;
+        }
+
+        img {
+          @apply absolute top-1/2 left-3 -translate-y-1/2;
+        }
+      }
+    }
+  }
+
+  .record {
+    .primary-btn {
+      @apply py-2.5 px-5 flex items-center gap-2.5 text-sm font-semibold text-white bg-pink-100 rounded-4xl hover:bg-pink-100/70 transition-colors duration-150;
+    }
+  }
+}
