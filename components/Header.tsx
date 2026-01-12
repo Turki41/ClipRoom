@@ -1,6 +1,7 @@
 import { ICONS } from "@/constants"
 import Image from "next/image"
 import Link from "next/link"
+import DropdownList from "./DropdownList"
 
 const Header = ({ title, subtitle, userImg }: HeaderProps) => {
     return (
@@ -8,7 +9,7 @@ const Header = ({ title, subtitle, userImg }: HeaderProps) => {
             <section className="header-container">
                 <div className="details">
                     {userImg && (
-                        <Image src={userImg || '/assets/images/dummy.jpg'} alt="User Icon" width={66} height={66} className="rounded-full" />
+                        <Image src={userImg} alt="User Icon" width={66} height={66} className="rounded-full" />
                     )}
 
                     <article>
@@ -38,7 +39,7 @@ const Header = ({ title, subtitle, userImg }: HeaderProps) => {
                         <Image src={'/assets/icons/search.svg'} alt="Search" width={16} height={16} />
                     </div>
 
-                    {/* <DropdownList/> */}
+                    <DropdownList/>
             </section>
         </header>
     )

@@ -114,9 +114,30 @@
     }
   }
 
+  .filter-trigger {
+    @apply flex items-center justify-center px-4 py-2 border border-gray-20 rounded-[28px] gap-3;
+
+    figure {
+      @apply flex items-center gap-1;
+
+      span {
+        @apply text-sm font-semibold text-dark-100 -tracking-[0.8px];
+      }
+    }
+  }
+
+  .dropdown {
+    @apply absolute bg-white shadow-lg rounded-lg flex flex-col gap-2 w-full z-10 top-12;
+
+    .list-item {
+      @apply px-3 py-2.5 text-sm font-medium -tracking-[0.8px] relative text-dark-100 cursor-pointer hover:bg-pink-100 hover:text-white transition-colors duration-150 ease-in-out rounded-md;
+
+    }
+  }
+
   .record {
     .primary-btn {
-      @apply py-2.5 px-5 flex items-center gap-2.5 text-sm font-semibold text-white bg-pink-100 rounded-4xl hover:bg-pink-100/70 transition-colors duration-150;
+      @apply py-2.5 px-5 flex items-center gap-2.5 text-sm font-semibold text-white bg-pink-100 rounded-4xl hover:bg-pink-100/70 transition-colors duration-100;
     }
   }
 }
