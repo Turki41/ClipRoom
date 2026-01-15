@@ -212,7 +212,7 @@
   }
 
   .auth-layout {
-    @apply w-full min-h-screen grid grid-cols-2 justify-between overflow-hidden max-lg:gap-10;
+    @apply w-full min-h-screen grid grid-cols-2 max-md:grid-cols-1 justify-center overflow-hidden max-lg:gap-10;
 
     .testimonial {
       @apply bg-light-100 max-md:hidden flex flex-col justify-between lg:h-screen w-full py-10 px-6 lg:pl-10 gap-6;
@@ -244,6 +244,65 @@
 
       p {
         @apply text-sm font-medium text-gray-100;
+      }
+    }
+  }
+
+  .sign-in {
+    @apply flex items-center justify-center w-full h-screen px-10 py-10;
+
+    section {
+      @apply rounded-2xl bg-white shadow-2xl max-w-xl w-full flex flex-col px-5 py-7.5 gap-8;
+
+      header {
+        @apply flex flex-col items-center gap-3 justify-center;
+
+        p {
+          @apply text-2xl font-medium text-dark-100 text-center -tracking-[1px];
+
+          span {
+            @apply text-pink-100;
+          }
+        }
+      }
+
+      a {
+        @apply flex items-center gap-2.5 justify-center;
+
+        h1 {
+          @apply text-2xl font-black text-blue-100 font-satoshi;
+        }
+      }
+
+      form {
+        @apply flex flex-col gap-5;
+
+        .info-container {
+          @apply flex flex-col gap-1;
+
+          input {
+            @apply border border-pink-300 py-2 px-2 text-dark-100 text-sm font-normal placeholder:text-gray-100 w-full rounded-xl focus:outline-pink-100;
+          }
+
+          label {
+            @apply text-sm text-dark-100;
+          }
+        }
+
+        button {
+          @apply w-full flex justify-center items-center bg-pink-100 text-light-100 mt-2 rounded-2xl py-2 text-base font-bold cursor-pointer -tracking-[0.4px] hover:bg-pink-100/80 transition duration-150;
+        }
+      }
+
+      footer {
+        @apply text-center flex items-center justify-center gap-1;
+
+        p {
+          @apply text-sm text-gray-100;
+        }
+        a {
+          @apply text-sm text-pink-500 hover:underline;
+        }
       }
     }
   }
