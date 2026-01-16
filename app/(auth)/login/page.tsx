@@ -17,15 +17,15 @@ const page = () => {
                 <form>
                     <div className="info-container">
                         <label htmlFor="email">Email Address</label>
-                        <input id="email" type="text" />
+                        <input id="email" type="text" placeholder="email@gmail.com"/>
                     </div>
 
                     <div className="info-container">
                         <label htmlFor="password">Password</label>
-                        <input id="password" type="password" />
+                        <input id="password" type="password" placeholder="********"/>
                     </div>
 
-                    <button type="submit">Sign In</button>
+                    <button type="submit">Login</button>
                 </form>
 
                 <footer>

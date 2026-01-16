@@ -212,7 +212,7 @@
   }
 
   .auth-layout {
-    @apply w-full min-h-screen grid grid-cols-2 max-md:grid-cols-1 justify-center overflow-hidden max-lg:gap-10;
+    @apply relative w-full min-h-screen grid grid-cols-2 max-md:grid-cols-1 justify-center overflow-hidden max-lg:gap-10;
 
     .testimonial {
       @apply bg-light-100 max-md:hidden flex flex-col justify-between lg:h-screen w-full py-10 px-6 lg:pl-10 gap-6;
@@ -245,6 +245,10 @@
       p {
         @apply text-sm font-medium text-gray-100;
       }
+    }
+
+    .decorator {
+      @apply absolute -top-56 -right-56 -z-20 w-96 h-96 bg-pink-100/70 rounded-full opacity-20 blur-3xl;
     }
   }
 
@@ -281,7 +285,7 @@
           @apply flex flex-col gap-1;
 
           input {
-            @apply border border-pink-300 py-2 px-2 text-dark-100 text-sm font-normal placeholder:text-gray-100 w-full rounded-xl focus:outline-pink-100;
+            @apply border border-pink-200 py-2 px-2 text-dark-100 text-sm font-normal placeholder:text-gray-100 w-full rounded-xl focus:outline-pink-100;
           }
 
           label {

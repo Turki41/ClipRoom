@@ -27,13 +27,13 @@ const layout = ({ children }: { children: React.ReactNode }) => {
         <footer>
           <p>©ClipRoom. {new Date().getFullYear()}</p>
         </footer>
-
       </aside>
 
       <aside>
         {children}
       </aside>
       
+      <div className='decorator'/>
     </main>
   )
 }
