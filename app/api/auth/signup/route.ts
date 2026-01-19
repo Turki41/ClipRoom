@@ -5,7 +5,7 @@ export const POST = async (req: Request) => {
     try {
         const { userName, email, password } = await req.json()
 
-        if (!email.trim() || !password.trim() || !userName.trim()) {
+        if (!email?.trim() || !password?.trim() || !userName?.trim()) {
             console.log('Missing fields in signup')
             return NextResponse.json({ message: 'Please fill all fields' }, { status: 400 })
         }
