@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { satoshi } from "@/fonts/font";
 import { Karla } from "next/font/google";
+import { ReduxProvider } from "./ReduxProvider";
 
 const geistKarla = Karla({
   variable: "--font-geist-karla",
@@ -23,7 +24,9 @@ export default function RootLayout({
       <body
         className={`${geistKarla.variable} ${satoshi.variable} antialiased`}
       >
-        {children}
+        <ReduxProvider>
+          {children}
+        </ReduxProvider>
       </body>
     </html>
   );
