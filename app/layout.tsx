@@ -3,6 +3,7 @@ import "./globals.css";
 import { satoshi } from "@/fonts/font";
 import { Karla } from "next/font/google";
 import { ReduxProvider } from "./ReduxProvider";
+import { Toaster } from "react-hot-toast";
 
 const geistKarla = Karla({
   variable: "--font-geist-karla",
@@ -25,6 +26,7 @@ export default function RootLayout({
         className={`${geistKarla.variable} ${satoshi.variable} antialiased`}
       >
         <ReduxProvider>
+          <Toaster/>
           {children}
         </ReduxProvider>
       </body>
