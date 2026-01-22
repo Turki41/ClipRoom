@@ -33,8 +33,7 @@ const page = () => {
             toast.success('Signed up!')
 
         } catch (error: any) {
-            console.error('Signup failed:', error)
-            toast.error(String(error?.data?.message) || 'Something went wrong, please try again.')
+            return toast.error(String(error?.data?.message) || 'Something went wrong, please try again.')
         }
 
 
