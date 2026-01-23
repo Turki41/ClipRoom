@@ -1,7 +1,7 @@
 interface HeaderProps {
-    title: string,
-    subtitle: string,
-    userImg?: string,
+  title: string,
+  subtitle: string,
+  userImg?: string,
 }
 
 interface ParamsWithSearch {
@@ -21,4 +21,15 @@ interface VideoCardProps {
   views: number;
   visibility: Visibility;
   duration: number | null;
+}
+
+interface FormFieldProps {
+  id: string;
+  label: string;
+  type?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
+  placeholder?: string;
+  as?: "input" | "textarea" | "select";
+  options?: { value: string; label: string }[];
 }

@@ -58,6 +58,10 @@
     @apply max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8;
   }
 
+  .wrapper-md {
+    @apply max-w-3xl w-full mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
   .page {
     @apply flex flex-col min-h-screen pt-12.5 pb-20 gap-9;
   }
@@ -304,10 +308,42 @@
         p {
           @apply text-sm text-gray-100;
         }
+
         a {
           @apply text-sm text-pink-500 hover:underline;
         }
       }
     }
   }
+
+  .upload-page {
+    @apply flex flex-col gap-7.5 pt-12.5 pb-20;
+
+    h1 {
+      @apply text-3xl font-bold text-dark-100;
+    }
+
+    form {
+      @apply rounded-2xl border border-pink-100/30 shadow-md shadow-pink-100/10 gap-6 w-full flex flex-col px-5 py-7.5;  
+    } 
+  
+    .error-field {
+      @apply border border-red-500 bg-red-100 text-red-700 p-4 rounded-md;
+    }
+  }
+
+  .form-field {
+    @apply flex flex-col gap-2;
+
+    label {
+      @apply text-gray-100 text-base font-medium;
+    }
+
+    input,
+    select,
+    textarea {
+      @apply w-full border border-gray-20 rounded-xl resize-none text-dark-100 placeholder:text-gray-100 py-2.5 px-2.5 focus:outline-none focus:ring-[1.5px] focus:ring-pink-100 transition-all placeholder:font-medium text-base font-semibold;
+    }
+  }
+
 }
