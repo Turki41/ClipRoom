@@ -33,3 +33,15 @@ interface FormFieldProps {
   as?: "input" | "textarea" | "select";
   options?: { value: string; label: string }[];
 }
+
+interface FileInputProps {
+  id: string;
+  label: string;
+  accept: string;
+  file: File | null;
+  previewUrl: string | null;
+  inputRef: React.RefObject<HTMLInputElement | null>;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onReset: () => void;
+  type: "video" | "image";
+}
