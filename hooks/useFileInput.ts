@@ -14,6 +14,9 @@ export const useFileInput = (maxSize: number) => {
             if (selectedFile.size > maxSize) {
                 toast.error(`File size exceeds the limit of ${maxSize / (1024 * 1024)} MB.`)
                 return
+            } else if (!selectedFile.type.startsWith('image/') && !selectedFile.type.startsWith('video/')) {
+                toast.error('Unsupported file type. Please select an image or video file.')
+                return
             }
 
             if (previewUrl) {
@@ -30,7 +33,6 @@ export const useFileInput = (maxSize: number) => {
 
                 video.onloadedmetadata = () => {
                     setDuration(Math.round(video.duration) || 0)
-                    URL.revokeObjectURL(video.src)
                 }
 
                 video.src = objectUrl
@@ -52,5 +54,5 @@ export const useFileInput = (maxSize: number) => {
         }
     }
 
-    return {file, previewUrl, duration, inputRef, handleFileChange, resetFile}
+    return { file, previewUrl, duration, inputRef, handleFileChange, resetFile }
 }

@@ -5,7 +5,7 @@ const FileInput = ({ id, label, accept, file, previewUrl, inputRef, onChange, on
     <section className='file-input'>
       <label htmlFor={id}>{label}</label>
 
-      <input type={type} id={id} accept={accept} ref={inputRef} onChange={onChange} hidden />
+      <input type='file' id={id} accept={accept} ref={inputRef} onChange={onChange} hidden />
 
       {!previewUrl ? (
         <figure onClick={() => inputRef.current?.click()}>
