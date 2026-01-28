@@ -45,3 +45,16 @@ interface FileInputProps {
   onReset: () => void;
   type: "video" | "image";
 }
+
+interface Video {
+  id: string,
+  user_id: string,
+  title: string,
+  description: string,
+  visibility: Visibility,
+  video_url: string,
+  thumbnail_url: string,
+  duration: string,
+  views?: number,
+  created_at?: string,
+}

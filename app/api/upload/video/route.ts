@@ -63,6 +63,16 @@ export const POST = async (req: Request) => {
         })
 
         if (videoMetaError) {
+            // Cleanup uploaded files in case of db error
+            const { error: videoCleanupError } = await supabase.storage.from('Videos').remove([videoData.path])
+            if (videoCleanupError) {
+                console.error('Error cleaning up video after metadata db failure:', videoCleanupError)
+            }
+            const { error: thumbnailCleanupError } = await supabase.storage.from('Thumbnails').remove([thumbnailData.path])
+            if (thumbnailCleanupError) {
+                console.error('Error cleaning up thumbnail after metadata db failure:', thumbnailCleanupError)
+            }
+            
             console.error('Error storing video metadata in upload video api controller:', videoMetaError)
             return NextResponse.json({ message: 'Failed to upload' }, { status: 400 })
         }
