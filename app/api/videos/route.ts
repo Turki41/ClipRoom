@@ -1,11 +1,11 @@
 import { createClient } from "@/utils/supabase/server"
 import { NextResponse } from "next/server"
 
-export const GET = async (req: Request) => {
+export const GET = async () => {
     try {
         const supabase = await createClient()
 
-        const {data: videos, error: videosError} = await supabase.from('Videos').select('*').order('created_at', { ascending: false })
+        const {data: videos, error: videosError} = await supabase.from('Videos').select('*, Users(userName, profilePicture)').order('created_at', { ascending: false })
 
         if (videosError) {
             console.error('Error fetching videos in get videos api controller:', videosError)

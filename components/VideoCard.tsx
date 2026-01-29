@@ -10,7 +10,7 @@ const VideoCard = ({ id, title, thumbnail, userImg, username, createdAt, views, 
             <article>
                 <div>
                     <figure>
-                        <Image src={userImg} alt="Avatar" width={34} height={34} className="rounded-full" />
+                        <Image src={userImg || '/assets/images/dummy.jpg'} alt="Avatar" width={34} height={34} className="rounded-full" />
                         <figcaption>
                             <h3>{username}</h3>
                             <p>{visibility}</p>

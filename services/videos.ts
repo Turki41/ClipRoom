@@ -4,7 +4,7 @@ export const videos = createApi({
     reducerPath: "videos",
     baseQuery: fetchBaseQuery({}),
     endpoints: (builder) => ({
-        getVideos: builder.query<Video[], void>({
+        getVideos: builder.query<{ videos: Video[] }, void>({
             query: () => ({
                 url: 'api/videos',
                 method: 'GET',

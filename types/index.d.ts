@@ -55,6 +55,10 @@ interface Video {
   video_url: string,
   thumbnail_url: string,
   duration: string,
-  views?: number,
-  created_at?: string,
+  views: number,
+  created_at: Date,
+  Users: {
+    userName: string,
+    profilePicture: string,
+  }
 }
