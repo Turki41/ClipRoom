@@ -62,3 +62,9 @@ interface Video {
     profilePicture: string,
   }
 }
+
+interface EmptyStateProps {
+  icon: string;
+  title: string;
+  description?: string;
+}
