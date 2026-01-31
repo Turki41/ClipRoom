@@ -1,22 +1,41 @@
 'use client'
 
+import VideoCard from '@/components/VideoCard'
 import { useGetVideoByIdQuery } from '@/services/videos'
 import { useParams } from 'next/navigation'
 
-const page = () => {
+const Page = () => {
   const params = useParams()
-  const videoId = params.id as string
-  const { data, isLoading, error } = useGetVideoByIdQuery(videoId)
+  const id = params.id
+
+  const { data, isLoading, error } = useGetVideoByIdQuery(id, {
+    skip: !id,
+  })
+
+  const video = data?.video
 
   if (isLoading) return <p>Loading...</p>
-  /* if (error) return <p>Failed to load video {JSON.stringify(error)}</p> */
+  if (error) return <p>Failed to load video</p>
+
   return (
-    <div className='wrapper page'>
-      <button>video</button>
-      <p>{videoId}</p>
-      <p>{data ? JSON.stringify(data)  : 'No video data available'}</p>
+    <div className="wrapper page">
+      <p>Video ID: {id}</p>
+      <pre>{JSON.stringify(data, null, 2)}</pre >
+      {video && (
+        <VideoCard
+              id={video.id}
+              title={video.title}
+              thumbnail={video.thumbnail_url}
+              userImg={video.Users?.profilePicture || ''}
+              username={video.Users?.userName || ''}
+              duration={parseInt(video.duration)}
+              visibility={video.visibility}
+              views={video.views}
+              createdAt={new Date(video.created_at)}
+            />
+      )}
     </div>
   )
 }
 
-export default page
+export default Page

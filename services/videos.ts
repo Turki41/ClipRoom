@@ -10,7 +10,7 @@ export const videos = createApi({
                 method: 'GET',
             })
         }),
-        getVideoById: builder.query<any, string>({
+        getVideoById: builder.query<{ video: Video }, any>({
             query: (id: string) => ({
                 url: `api/videos/${id}`,
                 method: 'GET',
