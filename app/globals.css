@@ -405,4 +405,40 @@
       }
     }
   }
+
+  .details-header {
+    @apply flex justify-between gap-5 flex-col md:flex-row;
+
+    .user-info {
+      @apply flex flex-col gap-2.5;
+
+      h1 {
+        @apply text-3xl font-bold text-dark-100;
+      }
+
+      figure {
+        @apply gap-1 flex items-center;
+
+        a {
+          @apply flex items-center gap-2 text-gray-800 text-sm font-semibold;
+
+          img {
+            @apply rounded-full;
+          }
+        }
+
+        figcaption {
+          @apply flex items-center gap-1 text-gray-100 text-sm font-semibold;
+        }
+      }
+    }
+  }
+
+  .video-details {   
+    @apply flex flex-col lg:flex-row gap-7.5;
+
+    .content {
+      @apply flex flex-col gap-6 w-full;
+    }
+  }
 }
