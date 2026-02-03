@@ -1,6 +1,7 @@
 'use client'
 
 import EmptyState from '@/components/EmptyState'
+import VideoDescription from '@/components/VideoDescription'
 import VideoDetailsHeader from '@/components/VideoDetailsHeader'
 import VideoPlayer from '@/components/VideoPlayer'
 import { useGetVideoByIdQuery } from '@/services/videos'
@@ -23,12 +24,12 @@ const Page = () => {
     </div>)
 
   return (
-    <div className="wrapper page">
+    <div className="wrapper-lg page">
       <section className='video-details'>
         <div className='content'>
           <VideoDetailsHeader video={video} />
           <VideoPlayer url={video!.video_url} />
-          {/* <VideoDescription description={video.description} /> */}
+          <VideoDescription description={video.description} /> 
         </div>
       </section>
     </div>
