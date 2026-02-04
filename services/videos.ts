@@ -15,8 +15,14 @@ export const videos = createApi({
                 url: `api/videos/${id}`,
                 method: 'GET',
             })
-        })
+        }),
+        getVideosByUserId: builder.query<Video[], any>({
+            query: (userId: string) => ({
+                url: `api/videos/user/${userId}`,
+                method: 'GET',
+            })
+        }),
     })
 });
 
-export const { useGetVideosQuery, useGetVideoByIdQuery } = videos;
+export const { useGetVideosQuery, useGetVideoByIdQuery, useGetVideosByUserIdQuery } = videos;

@@ -10,7 +10,8 @@ import { useParams } from 'next/navigation'
 const Page = () => {
   const params = useParams()
   const videoId = params.id
-
+  
+  //TODO: fetch videos in server.
   const { data, isLoading, error } = useGetVideoByIdQuery(videoId, {
     skip: !videoId,
   })
@@ -29,7 +30,7 @@ const Page = () => {
         <div className='content'>
           <VideoDetailsHeader video={video} />
           <VideoPlayer url={video!.video_url} />
-          <VideoDescription description={video.description} /> 
+          <VideoDescription description={video.description} />
         </div>
       </section>
     </div>

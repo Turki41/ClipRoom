@@ -16,7 +16,6 @@ export default function Home() {
   return (
     <main className="wrapper page">
       <Header title="All Videos" subtitle="Public Library" />
-      <button onClick={() => console.log(videosArray)}>videos</button>
 
       {videosArray?.length <= 0 ? (
         <EmptyState icon="/assets/icons/video.svg" title="No Videos Found" />
