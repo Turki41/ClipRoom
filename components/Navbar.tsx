@@ -7,21 +7,13 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const Navbar = () => {
-    const [user, setUser] = useState<User | null>(null)
 
-    const { data, isLoading } = useCheckAuthQuery()
+    const { data: user, isLoading } = useCheckAuthQuery()
 
     const router = useRouter()
-
-    useEffect(() => {
-        if (!isLoading && data) {
-            setUser(data)
-        }
-    }, [data, isLoading])
     
     return (
         <header className='navbar'>
-            <button onClick={() => console.log(user)}>user</button>
             <nav>
                 <Link href={'/'}>
                     <Image src={'/assets/icons/logo.svg'} alt='Logo' width={32} height={32} />
@@ -39,8 +31,8 @@ const Navbar = () => {
                     </figure>
                 )}
 
-                {(true) && (
-                    <div>
+                {(!user && !isLoading) && (
+                    <div className='nav-btns-container'>
                         <Link href={'/login'} className='login-btn'>Login</Link>
                         <Link href={'/signup'} className='signup-btn'>Sign Up</Link>
                     </div>
