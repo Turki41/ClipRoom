@@ -3,7 +3,7 @@
 import EmptyState from '@/components/EmptyState'
 import Header from '@/components/Header'
 import VideoCard from '@/components/VideoCard'
-import { dummyCards } from '@/constants'
+import { useCheckAuthQuery } from '@/services/auth'
 import { useGetVideosByUserIdQuery } from '@/services/videos'
 import { useParams } from 'next/navigation'
 
@@ -16,7 +16,10 @@ const page = () => {
         skip: !userId,
     })
 
+    const { data: currentUserData } = useCheckAuthQuery()
+
     const videosArray = data || []
+    const user = videosArray.length > 0 ? videosArray[0].Users : null
 
     if (isLoading) return <p>Loading...</p>
     if (error) return (
@@ -26,8 +29,7 @@ const page = () => {
 
     return (
         <main className="wrapper page">
-            <Header title="All Videos" subtitle="Public Library" />
-            <button onClick={() => console.log(videosArray)}>videos</button>
+            <Header title={user?.userName || "All Videos"} subtitle={"User Library"} userImg={user?.profilePicture || '/assets/images/dummy.jpg'} currentUser={user?.id === currentUserData?.id} />
 
             {videosArray?.length <= 0 ? (
                 <EmptyState icon="/assets/icons/video.svg" title="No Videos Found" />

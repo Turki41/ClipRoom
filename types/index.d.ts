@@ -1,7 +1,16 @@
+interface User {
+  id: string,
+  userName: string,
+  email: string,
+  profilePicture: string | null,
+  created_at: Date,
+}
+
 interface HeaderProps {
   title: string,
   subtitle: string,
   userImg?: string,
+  currentUser: boolean,
 }
 
 interface ParamsWithSearch {
@@ -58,6 +67,7 @@ interface Video {
   views: number,
   created_at: Date,
   Users: {
+    id?: string,
     userName: string,
     profilePicture: string,
   }

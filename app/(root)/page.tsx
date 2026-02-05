@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <main className="wrapper page">
-      <Header title="All Videos" subtitle="Public Library" />
+      <Header title="All Videos" subtitle="Public Library" currentUser={true} />
 
       {videosArray?.length <= 0 ? (
         <EmptyState icon="/assets/icons/video.svg" title="No Videos Found" />

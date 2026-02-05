@@ -17,8 +17,14 @@ export const authApi = createApi({
                 method: "POST",
                 body,
             })
+        }),
+        checkAuth: builder.query<User, void>({
+            query: () => ({
+                url: '/api/auth/checkAuth',
+                method: 'GET',
+            })
         })
     })
 })
 
-export const { useSignupMutation, useLoginMutation } = authApi;
+export const { useSignupMutation, useLoginMutation, useCheckAuthQuery } = authApi;

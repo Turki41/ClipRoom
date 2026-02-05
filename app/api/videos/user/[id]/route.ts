@@ -12,7 +12,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ id: 
 
         const supabase = await createClient()
 
-        const { data: videos, error: videosError } = await supabase.from('Videos').select('*, Users(userName, profilePicture)').eq('user_id', id);
+        const { data: videos, error: videosError } = await supabase.from('Videos').select('*, Users(id, userName, profilePicture)').eq('user_id', id);
 
         if (videosError) {
             console.error("Error fetching videos for user ID:", id, videosError);
