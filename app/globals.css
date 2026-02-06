@@ -52,14 +52,15 @@
         @apply flex items-center gap-4;
       }
     }
-    .nav-btns-container { 
+
+    .nav-btns-container {
       @apply flex items-center gap-1;
 
       .login-btn {
         @apply py-2.5 px-6 gap-2.5 text-sm font-semibold text-white border border-pink-100 bg-pink-100 rounded-4xl hover:bg-pink-100/70 transition-colors duration-150;
       }
 
-      .signup-btn { 
+      .signup-btn {
         @apply py-2.5 px-5 gap-2.5 text-sm font-semibold text-dark-100 border border-gray-25 rounded-4xl hover:bg-gray-20/50 transition-colors duration-150;
       }
     }
@@ -358,11 +359,12 @@
       @apply text-gray-100 text-base font-medium;
     }
 
-    input,
-    select,
-    textarea {
-      @apply w-full border border-gray-20 rounded-xl resize-none text-dark-100 placeholder:text-gray-100 py-2.5 px-2.5 focus:outline-none focus:ring-[1.5px] focus:ring-pink-100 transition-all placeholder:font-medium text-base font-semibold;
-    }
+  }
+
+  input,
+  select,
+  textarea {
+    @apply w-full border border-gray-20 rounded-xl resize-none text-dark-100 placeholder:text-gray-100 py-2.5 px-2.5 focus:outline-none focus:ring-[1.5px] focus:ring-pink-100 transition-all placeholder:font-medium text-base font-semibold;
   }
 
   .file-input {
@@ -449,7 +451,7 @@
     }
   }
 
-  .video-details {   
+  .video-details {
     @apply flex flex-col lg:flex-row gap-7.5;
 
     .content {
@@ -457,15 +459,59 @@
     }
   }
 
-  .video-description { 
+  .video-description {
     @apply p-4 bg-gray-100/5 rounded-xl hover:bg-gray-100/10 cursor-pointer transition;
 
     h1 {
       @apply text-lg font-bold text-dark-100;
     }
 
-    p {    
+    p {
       @apply text-gray-800 wrap-break-word;
+    }
+  }
+
+  .modal {
+    @apply fixed inset-0 flex items-center justify-center z-50;
+
+    .overlay-record {
+      @apply absolute inset-0 bg-gray-40 backdrop-blur-xs shadow-xl flex items-center justify-center w-full h-full;
+
+      .record-modal-content {
+        @apply bg-white flex items-center justify-center w-fit p-5 h-fit rounded-2xl;
+      }
+    }
+  }
+
+  .recorder {
+    @apply flex flex-col items-center justify-between space-y-4;
+
+    .logo-container {
+      @apply flex items-center justify-center gap-2 mb-10
+    }
+
+    p {
+      @apply text-center text-gray-100
+    }
+
+    button p {
+      @apply text-white font-semibold
+    }
+
+    .record-btn-container {
+      @apply flex flex-col items-center gap-2
+    }
+
+    .filePath-input-container {
+      @apply flex flex-col gap-1 w-full
+    }
+
+    .record-btns {
+      @apply flex flex-col items-center gap-2
+    }
+
+    .save-upload-btns {
+      @apply flex items-center gap-2
     }
   }
 }

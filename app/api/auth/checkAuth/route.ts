@@ -4,14 +4,14 @@ import { NextResponse } from "next/server"
 export const GET = async (request: Request) => {
     try {
         const supabase = await createClient()
-        const { data: { session }, error: getSessionError } = await supabase.auth.getSession()
+        const { data: AuthUser , error: getSessionError } = await supabase.auth.getUser()
 
-        if (getSessionError || !session) {
+        if (getSessionError || !AuthUser) {
             console.log('No active session found.', getSessionError)
             return NextResponse.json({ message: 'No User Found' }, { status: 404 })
         }
 
-        const { data: user, error: getUserError } = await supabase.from('Users').select('*').eq('id', session.user.id).single()
+        const { data: user, error: getUserError } = await supabase.from('Users').select('*').eq('id', AuthUser.user.id).single()
 
         if (getUserError) {
             console.error('Error fetching user data:', getUserError)

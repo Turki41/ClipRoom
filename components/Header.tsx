@@ -1,7 +1,7 @@
-import { ICONS } from "@/constants"
 import Image from "next/image"
 import Link from "next/link"
 import DropdownList from "./DropdownList"
+import RecordScreen from "./RecordScreen"
 
 const Header = ({ title, subtitle, userImg, currentUser }: HeaderProps) => {
     return (
@@ -24,13 +24,8 @@ const Header = ({ title, subtitle, userImg, currentUser }: HeaderProps) => {
                             <Image src={'/assets/icons/upload.svg'} alt="Upload" width={16} height={16} />
                             <span>Upload a video</span>
                         </Link>
-
-                        <div className="record">
-                            <button className="primary-btn">
-                                <Image src={ICONS.record} alt="Record" width={16} height={16} />
-                                <span>Record a video</span>
-                            </button>
-                        </div>
+                        
+                        <RecordScreen/>
                     </aside>)
                 }
             </section>
