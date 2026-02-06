@@ -487,7 +487,11 @@
     @apply flex flex-col items-center justify-between space-y-4;
 
     .logo-container {
-      @apply flex items-center justify-center gap-2 mb-10
+      @apply flex items-center justify-center gap-2 mb-10;
+
+      h1 {
+        @apply text-xl font-black font-satoshi -tracking-[0.1px];
+      }
     }
 
     p {

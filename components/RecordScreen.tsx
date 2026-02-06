@@ -1,6 +1,7 @@
 'use client'
 
 import { ICONS } from '@/constants'
+import { saveVideo } from '@/utils/saveVideo';
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -10,6 +11,28 @@ const RecordScreen = () => {
     const router = useRouter()
     const [isOpen, setIsOpen] = useState(false);
     const [videoURL, setVideoURL] = useState<string | null>(null);
+
+    const handleSaveVideo = async (blobUrl: string) => {
+        if (!blobUrl) return
+
+        const blob: Blob = await fetch(blobUrl).then(res => res.blob())
+        saveVideo({ blobUrl, blob })
+    }
+
+    const handleUploadVideo = () => {}
+
+    const getInstructions = (status: string) => {
+        switch (status) {
+            case 'idle':
+                return 'Click the record button to start recording your screen';
+            case 'recording':
+                return 'Recording in progress... Click the stop button to finish.';
+            case 'stopped':
+                return 'Recording stopped. You can save or upload your video.';
+            default:
+                return '';
+        }
+    }
 
     return (
         <div className="record">
@@ -22,7 +45,7 @@ const RecordScreen = () => {
                 screen
                 audio
                 onStop={(blobUrl, blob) => { setVideoURL(blobUrl); setIsOpen(true) }}
-                render={({ status, startRecording, stopRecording }) => (
+                render={({ status, startRecording, stopRecording, mediaBlobUrl, }) => (
                     <>
                         {isOpen && (
                             <section className='modal'>
@@ -31,11 +54,11 @@ const RecordScreen = () => {
                                         <div className="recorder">
                                             <div className="logo-container">
                                                 <Image src={'/assets/icons/logo.svg'} alt='Logo' width={32} height={32} />
-                                                <h1 className="text-xl font-black font-satoshi -tracking-[0.1px]">ClipRoom</h1>
+                                                <h1>ClipRoom</h1>
                                             </div>
 
                                             <div className="record-btn-container">
-                                                <p>Click the record button to start recording your screen</p>
+                                                <p>{getInstructions(status)}</p>
                                                 {status !== "recording" ? (
                                                     <div className='record-btns'>
                                                         {status !== 'stopped' &&
@@ -44,7 +67,7 @@ const RecordScreen = () => {
                                                             </button>}
                                                         {(status === 'stopped') && (
                                                             <div className='save-upload-btns'>
-                                                                <button className="primary-btn" onClick={() => { setIsOpen(false); }}>
+                                                                <button className="primary-btn" onClick={() => { handleSaveVideo(mediaBlobUrl || ''); setIsOpen(false) }}>
                                                                     <p>Save</p>
                                                                 </button>
                                                                 <button className="primary-btn">
