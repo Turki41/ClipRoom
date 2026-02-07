@@ -19,8 +19,8 @@ const page = () => {
     visibility: 'public'
   })
 
-  const video = useFileInput(MAX_FILE_SIZE)
-  const thumbnail = useFileInput(MAX_THUMBNAIL_SIZE)
+  const video = useFileInput({ maxSize: MAX_FILE_SIZE, type: 'video' })
+  const thumbnail = useFileInput({ maxSize: MAX_THUMBNAIL_SIZE, type: 'image' })
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { id, value } = e.target

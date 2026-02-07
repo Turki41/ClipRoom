@@ -1,16 +1,25 @@
 'use client'
 
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { ICONS } from '@/constants'
+import { setFile } from '@/features/video/videoSlice';
 import { saveVideo } from '@/utils/saveVideo';
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { ReactMediaRecorder } from 'react-media-recorder';
+import dynamic from 'next/dynamic';
+
+const ReactMediaRecorder = dynamic(
+    () => import('react-media-recorder').then(mod => mod.ReactMediaRecorder),
+    { ssr: false }
+);
 
 const RecordScreen = () => {
     const router = useRouter()
     const [isOpen, setIsOpen] = useState(false);
     const [videoURL, setVideoURL] = useState<string | null>(null);
+
+    const dispatch = useAppDispatch()
 
     const handleSaveVideo = async (blobUrl: string) => {
         if (!blobUrl) return
@@ -19,7 +28,28 @@ const RecordScreen = () => {
         saveVideo({ blobUrl, blob })
     }
 
-    const handleUploadVideo = () => {}
+    const getVideoDuration = (blob: Blob): Promise<number> => {
+        return new Promise((resolve) => {
+            const video = document.createElement('video')
+            const url = URL.createObjectURL(blob)
+            video.src = url
+            video.onloadedmetadata = () => {
+                URL.revokeObjectURL(url)
+                resolve(Math.round(video.duration) || 0)
+            }
+        })
+    }
+
+    const handleUploadVideo = async (blobUrl: string) => {
+        if (!blobUrl) return
+
+        const blob: Blob = await fetch(blobUrl).then(res => res.blob())
+        const duration = await getVideoDuration(blob)
+        const file = new File([blob], `recording-${new Date().toDateString()}.mp4`, { type: 'video/mp4' })
+        dispatch(setFile({ file, duration }))
+
+        router.push('/upload')
+    }
 
     const getInstructions = (status: string) => {
         switch (status) {
@@ -70,7 +100,7 @@ const RecordScreen = () => {
                                                                 <button className="primary-btn" onClick={() => { handleSaveVideo(mediaBlobUrl || ''); setIsOpen(false) }}>
                                                                     <p>Save</p>
                                                                 </button>
-                                                                <button className="primary-btn">
+                                                                <button className="primary-btn" onClick={() => { handleUploadVideo(mediaBlobUrl || ''); setIsOpen(false) }}>
                                                                     <p>Upload</p>
                                                                 </button>
                                                             </div>

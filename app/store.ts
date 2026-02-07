@@ -1,3 +1,4 @@
+import { videoSlice } from '@/features/video/videoSlice'
 import { authApi } from '@/services/auth'
 import { uploadApi } from '@/services/upload'
 import { videos } from '@/services/videos'
@@ -8,6 +9,7 @@ export const store = configureStore({
         [authApi.reducerPath]: authApi.reducer,
         [uploadApi.reducerPath]: uploadApi.reducer,
         [videos.reducerPath]: videos.reducer,
+        video: videoSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authApi.middleware, uploadApi.middleware, videos.middleware),
 })

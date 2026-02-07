@@ -96,5 +96,5 @@ export const dummyCards: VideoCardProps[] = [
 ];
 
 
-export const MAX_FILE_SIZE = 500 * 1024 * 1024; // 500 MB
+export const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20 MB
 export const MAX_THUMBNAIL_SIZE = 10 * 1024 * 1024; // 10 MB
