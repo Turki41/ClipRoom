@@ -219,7 +219,11 @@
     }
 
     .copy-btn {
-      @apply absolute top-3 right-3 shadow-md hover:shadow-lg transition duration-200 bg-white rounded-full size-6 flex items-center justify-center;
+      @apply absolute top-3 right-3 shadow-md hover:bg-gray-300 transition duration-200 bg-white rounded-full size-6 flex items-center justify-center;
+    }
+
+    .delete-btn { 
+      @apply absolute top-11 right-3 shadow-md hover:bg-red-200 transition duration-200 bg-white rounded-full size-6 flex items-center justify-center;
     }
 
     .duration {

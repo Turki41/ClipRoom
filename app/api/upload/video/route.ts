@@ -60,6 +60,8 @@ export const POST = async (req: Request) => {
             video_url: signedVideo?.signedUrl,
             thumbnail_url: signedThumbnail?.signedUrl,
             duration: duration,
+            video_path: videoData.path,
+            thumbnail_path: thumbnailData.path,
         })
 
         if (videoMetaError) {

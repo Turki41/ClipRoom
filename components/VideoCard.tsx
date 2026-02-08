@@ -1,10 +1,11 @@
 'use client"'
 
+import { useCheckAuthQuery } from "@/services/auth";
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react";
 
-const VideoCard = ({ id, title, thumbnail, userImg, username, createdAt, views, visibility, duration }: VideoCardProps) => {
+const VideoCard = ({ id, userId, title, thumbnail, userImg, username, createdAt, views, visibility, duration }: VideoCardProps) => {
     const [copied, setCopied] = useState(false);
 
     const handleCopyVideoUrl = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -14,6 +15,12 @@ const VideoCard = ({ id, title, thumbnail, userImg, username, createdAt, views, 
         setCopied(true)
         setTimeout(() => setCopied(false), 2000)
     }
+
+    const handleDeleteVideo = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+    }
+
+    const { data: currentUserData } = useCheckAuthQuery()
 
     return (
         <Link href={`/video/${id}`} className="video-card">
@@ -43,6 +50,11 @@ const VideoCard = ({ id, title, thumbnail, userImg, username, createdAt, views, 
             <button className="copy-btn" onClick={handleCopyVideoUrl} disabled={copied} >
                 <Image src={copied ? "/assets/images/checked.png" : "/assets/icons/link.svg"} alt={copied ? "link copied" : "copy link"} width={18} height={18} />
             </button>
+            {currentUserData?.id === userId &&
+                <button className='delete-btn' onClick={handleDeleteVideo}>
+                    <Image src="/assets/icons/delete.svg" alt="delete" width={18} height={18} />
+                </button>
+            }
 
             {duration && (
                 <div className="duration">

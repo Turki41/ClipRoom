@@ -1,17 +1,28 @@
 'use client'
 
-import { useCheckAuthQuery } from '@/services/auth'
+import { useCheckAuthQuery, useLogoutMutation } from '@/services/auth'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 const Navbar = () => {
 
     const { data: user, isLoading } = useCheckAuthQuery()
-
+    const [logout, { isLoading: isLogoutLoading }] = useLogoutMutation()
     const router = useRouter()
-    
+
+    const handleLogout = async () => {
+        try {
+            await logout().unwrap()
+
+            toast.success('Logged out!')
+            router.push('/login')
+
+        } catch (error) {
+            return toast.error('Failed to log out, please try again.')
+        }
+    }
     return (
         <header className='navbar'>
             <nav>
@@ -25,7 +36,7 @@ const Navbar = () => {
                         <button onClick={() => router.push(`/profile/${user.id}`)}>
                             <Image src={user.profilePicture || '/assets/images/dummy.jpg'} alt='User Icon' width={36} height={36} className='rounded-full object-cover' />
                         </button>
-                        <button>
+                        <button onClick={handleLogout} disabled={isLogoutLoading}>
                             <Image src={'/assets/icons/logout.svg'} alt='Logout' width={24} height={24} className='rotate-180' />
                         </button>
                     </figure>

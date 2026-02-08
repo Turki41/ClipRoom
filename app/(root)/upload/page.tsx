@@ -5,6 +5,7 @@ import FormField from '@/components/FormField'
 import { MAX_FILE_SIZE, MAX_THUMBNAIL_SIZE } from '@/constants'
 import { useFileInput } from '@/hooks/useFileInput'
 import { useUploadVideoMutation } from '@/services/upload'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -21,6 +22,8 @@ const page = () => {
 
   const video = useFileInput({ maxSize: MAX_FILE_SIZE, type: 'video' })
   const thumbnail = useFileInput({ maxSize: MAX_THUMBNAIL_SIZE, type: 'image' })
+
+  const router = useRouter()
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { id, value } = e.target
@@ -53,6 +56,7 @@ const page = () => {
       form.append('duration', video.duration.toString())
 
       await uploadVideo(form).unwrap()
+      router.push('/')
       toast.success('Video uploaded successfully!')
 
     } catch (error) {

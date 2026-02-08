@@ -22,6 +22,7 @@ type Visibility = "public" | "private";
 
 interface VideoCardProps {
   id: string;
+  userId: string;
   title: string;
   thumbnail: string;
   userImg: string;
@@ -61,8 +62,10 @@ interface Video {
   title: string,
   description: string,
   visibility: Visibility,
-  video_url: string,
+  video_url: string,  // This is the URL for displaying the video in the frontend
+  video_path: string, // This is the actual path where the video is stored in Supabase, used for deletion
   thumbnail_url: string,
+  thumbnail_path: string,
   duration: string,
   views: number,
   created_at: Date,

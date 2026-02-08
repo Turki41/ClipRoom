@@ -29,7 +29,7 @@ const page = () => {
 
     return (
         <main className="wrapper page">
-            <Header title={user?.userName || "All Videos"} subtitle={"User Library"} userImg={user?.profilePicture || '/assets/images/dummy.jpg'} currentUser={user?.id === currentUserData?.id} />
+            <Header title={user?.userName || "All Videos"} subtitle={"User Library"} userImg={user?.profilePicture || '/assets/images/dummy.jpg'} currentUser={userId === currentUserData?.id} />
 
             {videosArray?.length <= 0 ? (
                 <EmptyState icon="/assets/icons/video.svg" title="No Videos Found" />

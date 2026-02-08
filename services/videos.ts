@@ -22,7 +22,13 @@ export const videos = createApi({
                 method: 'GET',
             })
         }),
+        deleteVideo: builder.mutation<void, string>({
+            query: (id: string) => ({
+                url: `api/videos/${id}`,
+                method: 'DELETE',
+            })
+        })
     })
 });
 
-export const { useGetVideosQuery, useGetVideoByIdQuery, useGetVideosByUserIdQuery } = videos;
+export const { useGetVideosQuery, useGetVideoByIdQuery, useGetVideosByUserIdQuery, useDeleteVideoMutation } = videos;

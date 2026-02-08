@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
-export const GET = async (request: Request, {params}: {params:Promise<{ id: string }>}) => {
+export const GET = async (request: Request, { params }: { params: Promise<{ id: string }> }) => {
     try {
         const { id } = await params;
 
@@ -22,5 +22,25 @@ export const GET = async (request: Request, {params}: {params:Promise<{ id: stri
     } catch (error) {
         console.error("unhandled error fetching video by ID route controller:", error);
         return NextResponse.json({ message: `Internal server error` }, { status: 500 });
+    }
+}
+
+export const DELETE = async (request: Request, { params }: { params: Promise<{ id: string }> }) => {
+    try {
+        const { id } = await params;
+
+        if (!id || id === 'undefined') {
+            console.error("Invalid ID provided in video delete route controller:", id);
+            return NextResponse.json({ message: "Failed to delete video" }, { status: 400 });
+        }
+
+        const supabase = await createClient()
+
+        
+
+        return NextResponse.json({ message: "Video deleted successfully" }, { status: 200 });
+    } catch (error) {
+        console.error("Error deleting video:", error);
+        return NextResponse.json({ message: "Internal server error" }, { status: 500 });
     }
 }

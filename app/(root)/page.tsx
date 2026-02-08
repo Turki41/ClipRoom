@@ -33,6 +33,7 @@ export default function Home() {
               visibility={video.visibility}
               views={video.views}
               createdAt={new Date(video.created_at)}
+              userId= {video.user_id}
             />
           ))}
         </section>
