@@ -155,10 +155,14 @@
     }
   }
 
+  .primary-btn {
+    @apply py-2.5 px-5 flex items-center gap-2.5 text-sm font-semibold text-white bg-pink-100 rounded-4xl hover:bg-pink-100/70 transition-colors duration-100;
+  }
+  .secondary-btn {
+    @apply bg-gray-200 px-4 rounded-full hover:bg-gray-300 transition-colors
+  }
+
   .record {
-    .primary-btn {
-      @apply py-2.5 px-5 flex items-center gap-2.5 text-sm font-semibold text-white bg-pink-100 rounded-4xl hover:bg-pink-100/70 transition-colors duration-100;
-    }
   }
 
   .video-card {
@@ -483,6 +487,10 @@
 
       .record-modal-content {
         @apply bg-white flex items-center justify-center w-fit p-5 h-fit rounded-2xl;
+
+        .delete-modal-btns {
+          @apply flex w-full justify-end gap-2 mt-2
+        }
       }
     }
   }

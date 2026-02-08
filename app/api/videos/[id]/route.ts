@@ -36,7 +36,29 @@ export const DELETE = async (request: Request, { params }: { params: Promise<{ i
 
         const supabase = await createClient()
 
-        
+        const { data: videoData, error: videoDataError } = await supabase.from('Videos').select('*').eq('id', id).single();
+        if (videoDataError) {
+            console.error("Error fetching video data for deletion in video delete route controller:", videoDataError);
+            return NextResponse.json({ message: "Failed to delete video" }, { status: 400 });
+        }
+
+        const { error: deleteRowError } = await supabase.from('Videos').delete().eq('id', id);
+        if (deleteRowError) {
+            console.error("Error deleting video row in video delete route controller:", deleteRowError);
+            return NextResponse.json({ message: "Failed to delete video" }, { status: 400 });
+        }
+
+        const { error: deleteThumbnailError } = await supabase.storage.from('Thumbnails').remove([videoData.thumbnail_path]);
+        if (deleteThumbnailError) {
+            console.error("Error deleting thumbnail from storage in video delete route controller:", deleteThumbnailError);
+            return NextResponse.json({ message: "Failed to delete thumbnail" }, { status: 400 });
+        }
+
+        const { error: deleteVideoError } = await supabase.storage.from('Videos').remove([videoData.video_path]);
+        if (deleteVideoError) {
+            console.error("Error deleting video from storage in video delete route controller:", deleteVideoError);
+            return NextResponse.json({ message: "Failed to delete video file" }, { status: 400 });
+        }
 
         return NextResponse.json({ message: "Video deleted successfully" }, { status: 200 });
     } catch (error) {
