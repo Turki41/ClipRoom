@@ -3,7 +3,7 @@ import Link from "next/link"
 import DropdownList from "./DropdownList"
 import RecordScreen from "./RecordScreen"
 
-const Header = ({ title, subtitle, userImg, currentUser }: HeaderProps) => {
+const Header = ({ title, subtitle, userImg }: HeaderProps) => {
     return (
         <header className="header">
             <section className="header-container">
@@ -18,16 +18,15 @@ const Header = ({ title, subtitle, userImg, currentUser }: HeaderProps) => {
                     </article>
                 </div>
 
-                {currentUser &&
-                    (<aside>
-                        <Link href={'/upload'}>
-                            <Image src={'/assets/icons/upload.svg'} alt="Upload" width={16} height={16} />
-                            <span>Upload a video</span>
-                        </Link>
-                        
-                        <RecordScreen/>
-                    </aside>)
-                }
+                <aside>
+                    <Link href={'/upload'}>
+                        <Image src={'/assets/icons/upload.svg'} alt="Upload" width={16} height={16} />
+                        <span>Upload a video</span>
+                    </Link>
+
+                    <RecordScreen />
+                </aside>
+
             </section>
 
             <section className="search-filter">

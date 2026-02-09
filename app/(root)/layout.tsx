@@ -1,10 +1,12 @@
 import Navbar from "@/components/Navbar"
+import NextTopLoader from "nextjs-toploader"
 
-const layout = ({children}: {children: React.ReactNode}) => {
+const layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
-        <Navbar/>
-        {children}
+      <NextTopLoader />
+      <Navbar />
+      {children}
     </div>
   )
 }

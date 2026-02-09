@@ -1,24 +1,17 @@
-'use client'
-
 import EmptyState from '@/components/EmptyState'
 import VideoDescription from '@/components/VideoDescription'
 import VideoDetailsHeader from '@/components/VideoDetailsHeader'
 import VideoPlayer from '@/components/VideoPlayer'
 import { useGetVideoByIdQuery } from '@/services/videos'
-import { useParams } from 'next/navigation'
+import { createClient } from '@/utils/supabase/server'
 
-const Page = () => {
-  const params = useParams()
-  const videoId = params.id
+const Page = async ({params}: {params: Promise<{id: string}>}) => {
+  const {id} = await params
   
-  //TODO: fetch videos in server.
-  const { data, isLoading, error } = useGetVideoByIdQuery(videoId, {
-    skip: !videoId,
-  })
+  const supabase = await createClient()
 
-  const video = data?.video
+  const {data: video, error} = await supabase.from('Videos').select('*, Users(userName, profilePicture)').eq('id', id).single()
 
-  if (isLoading) return <p>Loading...</p>
   if (error || !video) return (
     <div className='wrapper page'>
       <EmptyState icon='/assets/icons/video.svg' title='Video Not Found' description='The requested video was not found or is unavailable.' />

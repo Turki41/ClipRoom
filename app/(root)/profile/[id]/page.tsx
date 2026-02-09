@@ -1,27 +1,16 @@
-'use client'
-
 import EmptyState from '@/components/EmptyState'
 import Header from '@/components/Header'
 import VideoCard from '@/components/VideoCard'
-import { useCheckAuthQuery } from '@/services/auth'
-import { useGetVideosByUserIdQuery } from '@/services/videos'
-import { useParams } from 'next/navigation'
+import { createClient } from '@/utils/supabase/server'
 
-const page = () => {
-    const params = useParams()
-    const userId = params.id
+const page = async ({params}: {params: Promise<{id: string}>}) => {
+    const {id} = await params
 
-    //TODO: fetch videos in server.
-    const { data, isLoading, error } = useGetVideosByUserIdQuery(userId, {
-        skip: !userId,
-    })
+    const supabase = await createClient()
 
-    const { data: currentUserData } = useCheckAuthQuery()
+    const {data: userVideos, error} = await supabase.from('Videos').select('*, Users(id, userName, profilePicture)').eq('user_id', id)
+    const user = userVideos?.[0]?.Users
 
-    const videosArray = data || []
-    const user = videosArray.length > 0 ? videosArray[0].Users : null
-
-    if (isLoading) return <p>Loading...</p>
     if (error) return (
         <div className='wrapper page'>
             <EmptyState icon='/assets/icons/video.svg' title='Video Not Found' description='The requested video was not found or is unavailable.' />
@@ -29,16 +18,17 @@ const page = () => {
 
     return (
         <main className="wrapper page">
-            <Header title={user?.userName || "All Videos"} subtitle={"User Library"} userImg={user?.profilePicture || '/assets/images/dummy.jpg'} currentUser={userId === currentUserData?.id} />
+            <Header title={user?.userName || "All Videos"} subtitle={"User Library"} userImg={user?.profilePicture || '/assets/images/dummy.jpg'}/>
 
-            {videosArray?.length <= 0 ? (
+            {userVideos?.length <= 0 ? (
                 <EmptyState icon="/assets/icons/video.svg" title="No Videos Found" />
             ) : (
                 <section className="video-grid">
-                    {videosArray.map((video, index) => (
+                    {userVideos.map((video, index) => (
                         <VideoCard
                             key={index}
                             id={video.id}
+                            userId={user.id}
                             title={video.title}
                             thumbnail={video.thumbnail_url}
                             userImg={video.Users?.profilePicture || ''}

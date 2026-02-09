@@ -1,27 +1,23 @@
-'use client';
-
 import EmptyState from "@/components/EmptyState";
 import Header from "@/components/Header";
 import VideoCard from "@/components/VideoCard";
-import { useGetVideosQuery } from "@/services/videos";
+import { createClient } from "@/utils/supabase/server";
 
-export default function Home() {
-  //TODO: fetch videos in server.
-  const { data, isLoading, error } = useGetVideosQuery()
-  const videosArray = data?.videos || []
-
-  if (isLoading) return <p>Loading...</p>
+export default async function Home() {
+  const supabase = await createClient()
+  
+  const {data: videos, error} = await supabase.from('Videos').select('*')
+  
   if (error) return <p>Failed to load videos</p>
 
   return (
     <main className="wrapper page">
-      <Header title="All Videos" subtitle="Public Library" currentUser={true} />
-
-      {videosArray?.length <= 0 ? (
+      <Header title="All Videos" subtitle="Public Library" />
+      {videos?.length <= 0 ? (
         <EmptyState icon="/assets/icons/video.svg" title="No Videos Found" />
       ) : (
         <section className="video-grid">
-          {videosArray.map((video, index) => (
+          {videos.map((video, index) => (
             <VideoCard
               key={index}
               id={video.id}
