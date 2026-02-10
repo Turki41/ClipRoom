@@ -2,15 +2,19 @@ import EmptyState from '@/components/EmptyState'
 import VideoDescription from '@/components/VideoDescription'
 import VideoDetailsHeader from '@/components/VideoDetailsHeader'
 import VideoPlayer from '@/components/VideoPlayer'
-import { useGetVideoByIdQuery } from '@/services/videos'
 import { createClient } from '@/utils/supabase/server'
 
-const Page = async ({params}: {params: Promise<{id: string}>}) => {
-  const {id} = await params
-  
+const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params
+
   const supabase = await createClient()
 
-  const {data: video, error} = await supabase.from('Videos').select('*, Users(userName, profilePicture)').eq('id', id).single()
+  const { data: video, error } = await supabase.from('Videos').select('*, Users(userName, profilePicture)').eq('id', id).single()
+
+  if (video) {
+    supabase.from('Videos').update({ views: video.views + 1 }).eq('id', id)
+      .then(({ error }) => error && console.log('Error updating views:', error))
+  }
 
   if (error || !video) return (
     <div className='wrapper page'>

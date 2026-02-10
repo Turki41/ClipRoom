@@ -3,7 +3,7 @@
 import { useCheckAuthQuery, useLogoutMutation } from '@/services/auth'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'nextjs-toploader/app'
 import toast from 'react-hot-toast'
 
 const Navbar = () => {

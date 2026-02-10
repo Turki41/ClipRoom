@@ -18,6 +18,13 @@ export const GET = async (request: Request, { params }: { params: Promise<{ id: 
             return NextResponse.json({ message: `Video not found` }, { status: 404 });
         }
 
+        const currentViews = Number(video.views) || 0;
+
+        const { data: videoCount, error: viewCounterError } = await supabase.from('Videos').update({ 'views': (currentViews + 1) }).eq('id', id).single()
+        if (viewCounterError) {
+            console.log('Error updating view count in getVideoById controller', viewCounterError)
+        }
+        
         return NextResponse.json({ video }, { status: 200 });
     } catch (error) {
         console.error("unhandled error fetching video by ID route controller:", error);

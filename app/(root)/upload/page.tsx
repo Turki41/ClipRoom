@@ -1,8 +1,10 @@
 'use client'
 
+import { useAppDispatch } from '@/app/hooks'
 import FileInput from '@/components/FileInput'
 import FormField from '@/components/FormField'
 import { MAX_FILE_SIZE, MAX_THUMBNAIL_SIZE } from '@/constants'
+import { resetFileState } from '@/features/video/videoSlice'
 import { useFileInput } from '@/hooks/useFileInput'
 import { useUploadVideoMutation } from '@/services/upload'
 import { useRouter } from 'next/navigation'
@@ -11,6 +13,7 @@ import toast from 'react-hot-toast'
 
 const page = () => {
   const [uploadVideo, { isLoading }] = useUploadVideoMutation()
+  const dispatch = useAppDispatch()
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
@@ -56,6 +59,7 @@ const page = () => {
       form.append('duration', video.duration.toString())
 
       await uploadVideo(form).unwrap()
+      dispatch(resetFileState())
       router.push('/')
       toast.success('Video uploaded successfully!')
 

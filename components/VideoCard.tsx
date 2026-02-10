@@ -4,11 +4,13 @@ import { useCheckAuthQuery } from "@/services/auth";
 import { useDeleteVideoMutation } from "@/services/videos";
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "nextjs-toploader/app";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 const VideoCard = ({ id, userId, title, thumbnail, userImg, username, createdAt, views, visibility, duration }: VideoCardProps) => {
     const [deleteVideo, { isLoading }] = useDeleteVideoMutation()
+    const router = useRouter()
 
     const [copied, setCopied] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -26,6 +28,7 @@ const VideoCard = ({ id, userId, title, thumbnail, userImg, username, createdAt,
             await deleteVideo(id).unwrap()
 
             toast.success("Video deleted successfully")
+            router.refresh()
         } catch (error) {
             return toast.error("Failed to delete video")
         } finally {
@@ -36,9 +39,9 @@ const VideoCard = ({ id, userId, title, thumbnail, userImg, username, createdAt,
     const { data: currentUserData } = useCheckAuthQuery()
 
     return (
-        <>
+        <main className="video-card">
             {isDeleteModalOpen && <DeleteModal onClose={() => setIsDeleteModalOpen(false)} onConfirm={() => handleDeleteVideo(id)} isLoading={isLoading} />}
-            <Link href={`/video/${id}`} className="video-card">
+            <Link href={`/video/${id}`}>
                 <Image src={thumbnail} alt="thumbnail" width={290} height={160} className="thumbnail" />
                 <article>
                     <div>
@@ -62,22 +65,23 @@ const VideoCard = ({ id, userId, title, thumbnail, userImg, username, createdAt,
                     </div>
                 </article>
 
-                <button className="copy-btn" onClick={handleCopyVideoUrl} disabled={copied} >
-                    <Image src={copied ? "/assets/images/checked.png" : "/assets/icons/link.svg"} alt={copied ? "link copied" : "copy link"} width={18} height={18} />
-                </button>
-                {currentUserData?.id === userId &&
-                    <div className='delete-btn' onClick={(e) => { setIsDeleteModalOpen(true); e.preventDefault() }}>
-                        <Image src="/assets/icons/delete.svg" alt="delete" width={18} height={18} />
-                    </div>
-                }
-
                 {duration && (
                     <div className="duration">
                         {Math.ceil(duration / 60)}min
                     </div>
                 )}
             </Link>
-        </>
+            <section>
+                <button className="copy-btn" onClick={handleCopyVideoUrl} disabled={copied} >
+                    <Image src={copied ? "/assets/images/checked.png" : "/assets/icons/link.svg"} alt={copied ? "link copied" : "copy link"} width={18} height={18} />
+                </button>
+                {currentUserData?.id === userId &&
+                    <button className='delete-btn' onClick={(e) => { setIsDeleteModalOpen(true) }}>
+                        <Image src="/assets/icons/delete.svg" alt="delete" width={18} height={18} />
+                    </button>
+                }
+            </section>
+        </main>
     )
 }
 

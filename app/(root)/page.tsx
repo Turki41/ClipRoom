@@ -6,7 +6,7 @@ import { createClient } from "@/utils/supabase/server";
 export default async function Home() {
   const supabase = await createClient()
   
-  const {data: videos, error} = await supabase.from('Videos').select('*')
+  const {data: videos, error} = await supabase.from('Videos').select('*, Users(userName, profilePicture)')
   
   if (error) return <p>Failed to load videos</p>
 

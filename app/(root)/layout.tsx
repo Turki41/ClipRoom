@@ -4,7 +4,7 @@ import NextTopLoader from "nextjs-toploader"
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
-      <NextTopLoader />
+      <NextTopLoader color="#ff4393"/>
       <Navbar />
       {children}
     </div>
