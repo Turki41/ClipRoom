@@ -3,21 +3,31 @@ import Header from "@/components/Header";
 import VideoCard from "@/components/VideoCard";
 import { createClient } from "@/utils/supabase/server";
 
-export default async function Home() {
+export default async function Home({ searchParams }: { searchParams: Promise<{ search?: string }> }) {
   const supabase = await createClient()
+  const { search } = await searchParams
   
   const {data: videos, error} = await supabase.from('Videos').select('*, Users(userName, profilePicture)')
   
   if (error) return <p>Failed to load videos</p>
 
+  const filteredVideos = videos?.filter(video => {
+    if (!search) return true
+    const searchLower = search.toLowerCase()
+    return (
+      video.title.toLowerCase().includes(searchLower) ||
+      video.Users?.userName?.toLowerCase().includes(searchLower)
+    )
+  }) || []
+
   return (
     <main className="wrapper page">
       <Header title="All Videos" subtitle="Public Library" />
-      {videos?.length <= 0 ? (
+      {filteredVideos?.length <= 0 ? (
         <EmptyState icon="/assets/icons/video.svg" title="No Videos Found" />
       ) : (
         <section className="video-grid">
-          {videos.map((video, index) => (
+          {filteredVideos.map((video, index) => (
             <VideoCard
               key={index}
               id={video.id}

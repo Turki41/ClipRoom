@@ -3,8 +3,9 @@ import Header from '@/components/Header'
 import VideoCard from '@/components/VideoCard'
 import { createClient } from '@/utils/supabase/server'
 
-const page = async ({params}: {params: Promise<{id: string}>}) => {
+const page = async ({params, searchParams}: {params: Promise<{id: string}>, searchParams: Promise<{search?: string}>}) => {
     const {id} = await params
+    const {search} = await searchParams
 
     const supabase = await createClient()
 
@@ -16,15 +17,25 @@ const page = async ({params}: {params: Promise<{id: string}>}) => {
             <EmptyState icon='/assets/icons/video.svg' title='Video Not Found' description='The requested video was not found or is unavailable.' />
         </div>)
 
+    const filteredVideos = userVideos?.filter(video => {
+        if (!search) return true
+        
+        const searchLower = search.toLowerCase()
+        return (
+            video.title.toLowerCase().includes(searchLower) ||
+            video.Users?.userName?.toLowerCase().includes(searchLower)
+        )
+    }) || []
+
     return (
         <main className="wrapper page">
             <Header title={user?.userName || "All Videos"} subtitle={"User Library"} userImg={user?.profilePicture || '/assets/images/dummy.jpg'}/>
 
-            {userVideos?.length <= 0 ? (
+            {filteredVideos?.length <= 0 ? (
                 <EmptyState icon="/assets/icons/video.svg" title="No Videos Found" />
             ) : (
                 <section className="video-grid">
-                    {userVideos.map((video, index) => (
+                    {filteredVideos.map((video, index) => (
                         <VideoCard
                             key={index}
                             id={video.id}
