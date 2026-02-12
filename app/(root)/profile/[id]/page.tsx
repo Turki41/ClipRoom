@@ -3,13 +3,13 @@ import Header from '@/components/Header'
 import VideoCard from '@/components/VideoCard'
 import { createClient } from '@/utils/supabase/server'
 
-const page = async ({params, searchParams}: {params: Promise<{id: string}>, searchParams: Promise<{search?: string}>}) => {
-    const {id} = await params
-    const {search} = await searchParams
+const page = async ({ params, searchParams }: { params: Promise<{ id: string }>, searchParams: Promise<{ search?: string, sort?: string }> }) => {
+    const { id } = await params
+    const { search, sort } = await searchParams
 
     const supabase = await createClient()
 
-    const {data: userVideos, error} = await supabase.from('Videos').select('*, Users(id, userName, profilePicture)').eq('user_id', id)
+    const { data: userVideos, error } = await supabase.from('Videos').select('*, Users(id, userName, profilePicture)').eq('user_id', id)
     const user = userVideos?.[0]?.Users
 
     if (error) return (
@@ -17,9 +17,9 @@ const page = async ({params, searchParams}: {params: Promise<{id: string}>, sear
             <EmptyState icon='/assets/icons/video.svg' title='Video Not Found' description='The requested video was not found or is unavailable.' />
         </div>)
 
-    const filteredVideos = userVideos?.filter(video => {
+    let filteredVideos = userVideos?.filter(video => {
         if (!search) return true
-        
+
         const searchLower = search.toLowerCase()
         return (
             video.title.toLowerCase().includes(searchLower) ||
@@ -27,9 +27,17 @@ const page = async ({params, searchParams}: {params: Promise<{id: string}>, sear
         )
     }) || []
 
+    const sortOption = sort || 'Most Recent'
+
+    if (sortOption === 'Most Recent') {
+        filteredVideos.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    } else if (sortOption === 'Most Viewed') {
+        filteredVideos.sort((a, b) => (b.views || 0) - (a.views || 0))
+    }
+
     return (
         <main className="wrapper page">
-            <Header title={user?.userName || "All Videos"} subtitle={"User Library"} userImg={user?.profilePicture || '/assets/images/dummy.jpg'}/>
+            <Header title={user?.userName || "All Videos"} subtitle={"User Library"} userImg={user?.profilePicture || '/assets/images/dummy.jpg'} />
 
             {filteredVideos?.length <= 0 ? (
                 <EmptyState icon="/assets/icons/video.svg" title="No Videos Found" />

@@ -3,15 +3,15 @@ import Header from "@/components/Header";
 import VideoCard from "@/components/VideoCard";
 import { createClient } from "@/utils/supabase/server";
 
-export default async function Home({ searchParams }: { searchParams: Promise<{ search?: string }> }) {
+export default async function Home({ searchParams }: { searchParams: Promise<{ search?: string; sort?: string }> }) {
   const supabase = await createClient()
-  const { search } = await searchParams
-  
-  const {data: videos, error} = await supabase.from('Videos').select('*, Users(userName, profilePicture)')
-  
+  const { search, sort } = await searchParams
+
+  const { data: videos, error } = await supabase.from('Videos').select('*, Users(userName, profilePicture)')
+
   if (error) return <p>Failed to load videos</p>
 
-  const filteredVideos = videos?.filter(video => {
+  let filteredVideos = videos?.filter(video => {
     if (!search) return true
     const searchLower = search.toLowerCase()
     return (
@@ -19,6 +19,14 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
       video.Users?.userName?.toLowerCase().includes(searchLower)
     )
   }) || []
+
+  const sortOption = sort || 'Most Recent'
+
+  if (sortOption === 'Most Recent') {
+    filteredVideos.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+  } else if (sortOption === 'Most Viewed') {
+    filteredVideos.sort((a, b) => (b.views || 0) - (a.views || 0))
+  }
 
   return (
     <main className="wrapper page">
@@ -39,7 +47,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
               visibility={video.visibility}
               views={video.views}
               createdAt={new Date(video.created_at)}
-              userId= {video.user_id}
+              userId={video.user_id}
             />
           ))}
         </section>
