@@ -28,8 +28,9 @@ const page = () => {
             const response = await login(loginData).unwrap()
             console.log('Login successful:', response)
             
+            window.location.href = '/'
             toast.success('Logged in!')
-            router.push('/')
+            
         } catch (error: any) {
             return toast.error(error?.data?.message || 'Something went wrong, please try again.')
         }

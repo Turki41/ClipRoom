@@ -28,8 +28,8 @@ const page = () => {
                 password
             }
             const response = await signup(userData).unwrap()
-            console.log('Signup successful:', response)
-            router.push('/')
+   
+            window.location.href = '/'
             toast.success('Signed up!')
 
         } catch (error: any) {
