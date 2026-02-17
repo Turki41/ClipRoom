@@ -4,6 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const checkAuth = async (req: NextRequest) => {
     try {
+        const referer = req.headers.get("referer") || "";
+        const fromAuthPage = referer.includes("/login") || referer.includes("/signup");
+
+        if (fromAuthPage) {
+            await Promise.resolve(() => {setTimeout(() => {}, 3000)})
+        }
+
         const supabase = await createClient()
 
         const { data: {user}, error: getUserError } = await supabase.auth.getUser()

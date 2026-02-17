@@ -28,7 +28,7 @@ const page = () => {
             const response = await login(loginData).unwrap()
             console.log('Login successful:', response)
             
-            window.location.href = '/'
+            router.push('/')
             toast.success('Logged in!')
             
         } catch (error: any) {

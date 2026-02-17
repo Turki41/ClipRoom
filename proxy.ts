@@ -21,11 +21,19 @@ export default async function proxy(req: NextRequest) {
       return res
     }
 
-    if(isPublicVideoPage(path)) {
+    if (isPublicVideoPage(path)) {
       return NextResponse.next()
     }
 
+    const referer = req.headers.get("referer") || "";
+    const fromAuthPage = referer.includes("/login") || referer.includes("/signup");
+
+
     if (isProtected(path)) {
+      if (fromAuthPage) {
+        return NextResponse.next()
+      }
+      
       const res = await checkAuth(req)
       return res
     }

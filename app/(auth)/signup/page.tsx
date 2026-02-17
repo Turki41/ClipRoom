@@ -29,7 +29,7 @@ const page = () => {
             }
             const response = await signup(userData).unwrap()
    
-            window.location.href = '/'
+            router.push('/')
             toast.success('Signed up!')
 
         } catch (error: any) {
